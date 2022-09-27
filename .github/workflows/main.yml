@@ -14,6 +14,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     strategy:
+      fail-fast: false
       matrix:
         ghc: ['ghc8107', 'ghc924']
         os: [ubuntu-latest, macOS-latest]
