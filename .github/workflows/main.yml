@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         ghc: ['ghc8107', 'ghc924']
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest, macOS-latest]
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
 
