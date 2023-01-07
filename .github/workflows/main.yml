@@ -20,10 +20,14 @@ jobs:
         os: [ubuntu-latest, macOS-latest]
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: input-output-hk/devx/haskell/nix-shell@v1
-        with:
-          compiler: ${{ matrix.ghc }}
+    - uses: cachix/install-nix-action@v17
+      with:
+        extra_nix_config: |
+          trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= loony-tools:pr9m4BkM/5/eSTZlkQyRt57Jz7OMBxNSUiMC4FkcNfk= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+          substituters = https://cache.iog.io/ https://cache.zw3rk.com/ https://cache.nixos.org/
+    - name: Build
+      shell: nix develop github:input-output-hk/devx#ghc8107-static-minimal --command "bash <(echo 'eval \"$shellHook\"; {0}')""
+      run: |
+        cabal update
+        cabal build
