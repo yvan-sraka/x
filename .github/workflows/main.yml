@@ -27,7 +27,7 @@ jobs:
           trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= loony-tools:pr9m4BkM/5/eSTZlkQyRt57Jz7OMBxNSUiMC4FkcNfk= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
           substituters = https://cache.iog.io/ https://cache.zw3rk.com/ https://cache.nixos.org/
     - name: Build
-      shell: nix develop github:input-output-hk/devx#ghc8107-static-minimal --command "bash <(echo 'eval \"$shellHook\"; {0}')""
+      shell: nix develop github:input-output-hk/devx#ghc8107-static-minimal --command "/usr/bin/bash <(echo 'eval \"$shellHook\"; {0}')""
       run: |
         cabal update
         cabal build
