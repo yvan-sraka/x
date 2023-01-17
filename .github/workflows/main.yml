@@ -26,8 +26,18 @@ jobs:
         extra_nix_config: |
           trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= loony-tools:pr9m4BkM/5/eSTZlkQyRt57Jz7OMBxNSUiMC4FkcNfk= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
           substituters = https://cache.iog.io/ https://cache.zw3rk.com/ https://cache.nixos.org/
+    - name: Add devx-shell
+      run: |
+        mkdir -p $GITHUB_WORKSPACE/.bin
+        cat <<EOF > $GITHUB_WORKSPACE/.bin/devx-shell
+        #!/bin/bash
+        nix develop github:input-output-hk/devx#ghc8107-static-minimal \
+          --command /usr/bin/bash <(echo 'eval "\$shellHook\"'; cat "$1")
+        EOF
+        chmod +x $GITHUB_WORKSPACE/.bin/devx-shell
+        export PATH=$GITHUB_WORKSPACE/.bin:$PATH
     - name: Build
-      shell: nix develop github:input-output-hk/devx#ghc8107-static-minimal --command /usr/bin/bash {0}
+      shell: devx-shell {0}
       run: |
         cabal update
         cabal build
