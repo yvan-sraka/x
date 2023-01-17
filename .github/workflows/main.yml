@@ -37,7 +37,7 @@ jobs:
         chmod +x $GITHUB_WORKSPACE/.bin/devx-shell
         export PATH=$GITHUB_WORKSPACE/.bin:$PATH
     - name: Build
-      shell: devx-shell {0}
+      shell: $GITHUB_WORKSPACE/.bin/devx-shell {0}
       run: |
         cabal update
         cabal build
