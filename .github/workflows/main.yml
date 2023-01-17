@@ -26,6 +26,16 @@ jobs:
         extra_nix_config: |
           trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= loony-tools:pr9m4BkM/5/eSTZlkQyRt57Jz7OMBxNSUiMC4FkcNfk= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
           substituters = https://cache.iog.io/ https://cache.zw3rk.com/ https://cache.nixos.org/
+
+    - name: Download pre-build store
+      run: curl -LO https://s3.zw3rk.com/devx/0b0eeaea8c0b00e5d9dfb9349733024037798a5d-x86_64-linux.ghc8107-minimal.xz
+
+    - name: Unpack pre-build store
+      run: xz -d 0b0eeaea8c0b00e5d9dfb9349733024037798a5d-x86_64-linux.ghc8107-minimal.xz
+
+    - name: Import
+      run: nix-store --import < 0b0eeaea8c0b00e5d9dfb9349733024037798a5d-x86_64-linux.ghc8107-minimal
+
     - name: Add devx-shell
       run: |
         echo $PATH
