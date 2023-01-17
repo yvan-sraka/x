@@ -28,16 +28,14 @@ jobs:
           substituters = https://cache.iog.io/ https://cache.zw3rk.com/ https://cache.nixos.org/
     - name: Add devx-shell
       run: |
-        mkdir -p $GITHUB_WORKSPACE/.bin
-        cat <<EOF > $GITHUB_WORKSPACE/.bin/devx-shell
+        cat <<EOF > /usr/bin/devx-shell
         #!/bin/bash
         nix develop github:input-output-hk/devx#ghc8107-static-minimal \
           --command /usr/bin/bash <(echo 'eval "\$shellHook\"'; cat "$1")
         EOF
-        chmod +x $GITHUB_WORKSPACE/.bin/devx-shell
-        export PATH=$GITHUB_WORKSPACE/.bin:$PATH
+        chmod +x /usr/bin/devx-shell
     - name: Build
-      shell: $GITHUB_WORKSPACE/.bin/devx-shell {0}
+      shell: devx-shell {0}
       run: |
         cabal update
         cabal build
