@@ -34,7 +34,10 @@ jobs:
       run: xz -d 0b0eeaea8c0b00e5d9dfb9349733024037798a5d-x86_64-linux.ghc8107-minimal.xz
 
     - name: Import
-      run: nix-store --import < 0b0eeaea8c0b00e5d9dfb9349733024037798a5d-x86_64-linux.ghc8107-minimal
+      run: |
+        nix-store --import < 0b0eeaea8c0b00e5d9dfb9349733024037798a5d-x86_64-linux.ghc8107-minimal
+        rm 0b0eeaea8c0b00e5d9dfb9349733024037798a5d-x86_64-linux.ghc8107-minimal
+      
 
     - name: Download pre-build store (2)
       run: curl -LO https://s3.zw3rk.com/devx/0b0eeaea8c0b00e5d9dfb9349733024037798a5d-x86_64-linux.ghc8107-minimal.zstd
@@ -43,8 +46,9 @@ jobs:
       run: zstd -d 0b0eeaea8c0b00e5d9dfb9349733024037798a5d-x86_64-linux.ghc8107-minimal.zstd
 
     - name: Import
-      run: nix-store --import < 0b0eeaea8c0b00e5d9dfb9349733024037798a5d-x86_64-linux.ghc8107-minimal
-
+      run: |
+        nix-store --import < 0b0eeaea8c0b00e5d9dfb9349733024037798a5d-x86_64-linux.ghc8107-minimal
+        rm 0b0eeaea8c0b00e5d9dfb9349733024037798a5d-x86_64-linux.ghc8107-minimal
 
     - name: Add devx-shell
       run: |
